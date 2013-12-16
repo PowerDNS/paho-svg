@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<script type="text/javascript" src="mqttws31.js"></script>
+		<script type="text/javascript">
+			var client;
+
+			function doConnect() {
+				client = new Messaging.Client("localhost", 8080, "paho-dot");
+				console.log("Client instantiated.");
+				client.startTrace();
+				console.log("Now trying to connect...");
+				client.onMessageArrived = onMessageArrived;
+				client.connect({onSuccess:onConnect});
+			}
+
+			function onConnect() {
+				console.log("connection established");
+				doSubscribe();
+			}
+
+			function onMessageArrived(message) {
+				var S=document.getElementById("svgembed");
+				console.log("got message: " + message.payloadString);
+				S.innerHTML=message.payloadString;
+			}
+
+			function doSubscribe() {
+				client.subscribe("oneshot/svg");
+
+			}
+
+			window.onload = function() {
+				this.doConnect();
+			}
+		  </script>
+	</head>
+		<div id="svgembed" />
+	</body>
+</html>
