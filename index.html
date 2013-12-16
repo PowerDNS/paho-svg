@@ -5,7 +5,7 @@
 			var client;
 
 			function doConnect() {
-				client = new Messaging.Client("localhost", 8080, "paho-dot");
+				client = new Messaging.Client("192.168.0.13", 8080, "paho-dot-"+Math.floor(Math.random()*1000));
 				console.log("Client instantiated.");
 				client.startTrace();
 				console.log("Now trying to connect...");
